@@ -1,5 +1,11 @@
 from django.shortcuts import render, redirect
 from .forms import LoadImageForm, ResizeImageForm
+from .models import Image
+
+
+def list_image(request):
+    images = Image.objects.order_by('id')  # Получаем все обьекты из модели
+    return render(request, 'saveimage/list_image.html', {"images": images})
 
 
 def form_upload(request):
@@ -7,8 +13,9 @@ def form_upload(request):
         form_load = LoadImageForm(request.POST, request.FILES)
         if form_load.is_valid():
             form_load.save()
-            #return redirect('saveimage/form_resize.html')
-            return render(request, 'saveimage/form_resize.html')
+            return render(request, 'saveimage/form_resize.html',
+                          {'form_resize': ResizeImageForm,
+                           })
 
     else:
         form_load = LoadImageForm()

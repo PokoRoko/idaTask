@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список изображений</title>
+</head>
+<body>
+{% block content %}
+    <h1>Список изображений</h1>
+    {% if images %}
+        {% for element in images%}
+                <h5>{{element.id}} {{element.load_image.name}}</h5>
+        {% endfor %}
+    {% else %}
+        <p>Нет доступных изображений</p>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

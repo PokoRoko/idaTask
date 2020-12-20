@@ -11,6 +11,6 @@ class LoadImageForm(forms.ModelForm):
 class ResizeImageForm (forms.ModelForm):
     class Meta:
         model = Image
-        fields = ('length', 'width')
+        fields = ('width', 'length',)
 
 
