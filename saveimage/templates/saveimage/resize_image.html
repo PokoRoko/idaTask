@@ -6,5 +6,13 @@
 </head>
 <body>
 
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+      {{ form_resize.as_p }}
+    <button type="submit">Отправить</button>
+  </form>
+
+{% endblock %}
 </body>
 </html>

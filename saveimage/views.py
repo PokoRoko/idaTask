@@ -7,7 +7,7 @@ def form_upload(request):
         form_load = LoadImageForm(request.POST, request.FILES)
         if form_load.is_valid():
             form_load.save()
-            return redirect('home')
+            return redirect('saveimage/resize_image.html')
     else:
         form_load = LoadImageForm()
     return render(request, 'saveimage/form_upload.html', {
@@ -15,7 +15,7 @@ def form_upload(request):
     })
 
 
-def resize_image(request):
+def form_resize(request):
     if request.method == 'POST':
         form_resize = ResizeImageForm(request.POST, request.FILES)
         if form_resize.is_valid():
@@ -24,5 +24,5 @@ def resize_image(request):
     else:
         form_resize = ResizeImageForm()
     return render(request, 'saveimage/resize_image.html', {
-        'form_load': LoadImageForm,
+        'form_resize': ResizeImageForm,
     })
