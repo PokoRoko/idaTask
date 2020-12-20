@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>IDAtask</title>
+</head>
+<body>
+
+{% block content %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+      {{ form_load.as_p }}
+    <button type="submit">Отправить</button>
+  </form>
+
+{% endblock %}
+</body>
+</html>
