@@ -1,5 +1,9 @@
 from django.db import models
-
+from urllib.request import urlopen
+from tempfile import NamedTemporaryFile
+from django.core.files import File
+import urllib
+import os
 # Create your models here.
 
 
@@ -17,6 +21,19 @@ class Image(models.Model):
         """
         return self.name
 
+    # Переопределяем новый сэйв чтобы автоматически сохранялись изображения по ссылке
+    def save(self, *args, **kwargs):
+        if self.url_image and not self.load_image:
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urlopen(self.url_image).read())
+            file_name = self.url_image[self.url_image.rfind("/")+1:]  # Определяем имя файла в url
+            img_temp.flush()
+            self.load_image.save(file_name, File(img_temp))
+        super(Image, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = "Изображение"
         verbose_name_plural = "Изображения"
+
+
+
