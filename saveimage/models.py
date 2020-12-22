@@ -2,9 +2,6 @@ from django.db import models
 from urllib.request import urlopen
 from tempfile import NamedTemporaryFile
 from django.core.files import File
-import urllib
-import os
-# Create your models here.
 
 
 class Image(models.Model):
@@ -34,6 +31,5 @@ class Image(models.Model):
     class Meta:
         verbose_name = "Изображение"
         verbose_name_plural = "Изображения"
-
 
 

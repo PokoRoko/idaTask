@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import LoadImageForm, ResizeImageForm
 from .models import Image
-import os
-from pathlib import Path
 
 
 def list_image(request):
@@ -18,13 +16,14 @@ def form_upload(request):
             img_url = form_load.instance
             return render(request, 'saveimage/form_resize.html',
                           {'form_resize': ResizeImageForm,
-                           'img_url': img_url
+                           'img_url': img_url,
                            })
     else:
         form_load = LoadImageForm()
 
     return render(request, 'saveimage/form_upload.html', {
         'form_load': LoadImageForm,
+        'errors': form_load.non_field_errors(),
     })
 
 
