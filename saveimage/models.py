@@ -2,6 +2,7 @@ from django.db import models
 from urllib.request import urlopen
 from tempfile import NamedTemporaryFile
 from django.core.files import File
+from PIL import Image
 
 
 class Image(models.Model):
@@ -27,6 +28,7 @@ class Image(models.Model):
             img_temp.flush()
             self.load_image.save(file_name, File(img_temp))
         super(Image, self).save(*args, **kwargs)
+
 
     class Meta:
         verbose_name = "Изображение"

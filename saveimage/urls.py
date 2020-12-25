@@ -4,7 +4,7 @@ from . import views
 app_name = 'image'
 urlpatterns = [
     path('load_image', views.form_upload, name='load_image'),
-    path('form_resize', views.form_resize, name='form_resize'),
+    path('form_resize', views.form_upload, name='form_resize'),
     path('', views.list_image, name='list_image'),
 ]
 

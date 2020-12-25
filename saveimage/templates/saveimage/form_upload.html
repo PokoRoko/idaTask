@@ -10,7 +10,9 @@
     {% csrf_token %}
       {{ errors }}
       {{ form_load.as_p }}
-    <button type="submit">Отправить</button>
+      {{ form_resize.as_p }}
+      <button type="submit">Отправить</button>
+      <img src="{{MEDIA_URL}}{{img_url.load_image.url}}" />
   </form>
 {% endblock %}
 </body>

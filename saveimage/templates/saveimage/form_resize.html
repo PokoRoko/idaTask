@@ -10,9 +10,10 @@
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
       {{ form_resize.as_p }}
-      <img src="{{MEDIA_URL}}{{img_url.load_image.url}}" />
-    <button type="submit">Отправить</button>
+
+   <button type="submit">Отправить</button>
   </form>
+<img src="{{MEDIA_URL}}{{img_url.load_image.url}}" />
 {% endblock %}
 </body>
 </html>

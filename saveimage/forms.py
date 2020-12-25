@@ -5,7 +5,7 @@ from .models import Image
 class LoadImageForm(forms.ModelForm):
 
     def clean(self):
-
+        """Переопределяем clean для вывода ошибке при пустых или двух заполненых полях"""
         url_image = self.cleaned_data.get('url_image')
         load_image = self.cleaned_data.get('load_image')
         if (not load_image and not url_image) or (load_image and url_image):
@@ -21,3 +21,5 @@ class ResizeImageForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ('width', 'length',)
+
+
