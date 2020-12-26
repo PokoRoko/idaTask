@@ -3,20 +3,22 @@ from .forms import LoadImageForm, ResizeImageForm
 from .models import Image
 from django.db.models import Max
 from PIL import Image as ImgPil
-from idatask.settings import MEDIA_URL
+from idatask.settings import MEDIA_URL, MEDIA_ROOT
 
 
-def list_image(request):
+def list_image(request, open_image=''):
     images = Image.objects.order_by('-id')  # Получаем все обьекты из модели
-
     return render(request, 'saveimage/list_image.html', {"images": images})
 
 
-def form_upload(request):
+def form_upload(request, open_image=''):
+
     """Если в форме отправки есть изображение, обновит и покажет окно для изменения размера"""
     if request.method == 'POST':
         form_load = LoadImageForm(request.POST, request.FILES)
         form_resize = ResizeImageForm(request.POST, request.FILES)
+
+        # Проверяет форму и загружает изображение
         if form_load.is_valid():
             form_load.save()
             img_url = form_load.instance.load_image.url
@@ -26,19 +28,22 @@ def form_upload(request):
                            'errors': form_load.non_field_errors(),
                            })
 
-        if form_resize.is_valid():
+        if (open_image != '') or form_resize.is_valid() :
             # Возвращает последнюю загруженну картинку для редактирования
             max_id = Image.objects.aggregate(Max('id'))['id__max']  # Определяет последнюю запись в модели
             print(f'Загружено {max_id} фотографий')
             img_url = Image.objects.get(id=max_id)
-
             # Получаем новые размеры из формы
             new_width = int(request.POST.get('width'))
             new_height = int(request.POST.get('length'))
             img_path = img_url.load_image.path
-            cache_resize_image = ImgPil.open(img_path)
-            width, height = cache_resize_image.size
 
+            if open_image == '':
+                cache_resize_image = ImgPil.open(img_path)
+            else:
+                cache_resize_image = ImgPil.open(MEDIA_ROOT + open_image)
+
+            width, height = cache_resize_image.size
             # Куда и в каком формате сохраняем временное изображение
             cache_image_path = f'{MEDIA_URL}cache_image.{cache_resize_image.format}'
             # Изменение размера изображения если есть ширина и высота

@@ -3,7 +3,6 @@ from .models import Image
 
 
 class LoadImageForm(forms.ModelForm):
-
     def clean(self):
         """Переопределяем clean для вывода ошибке при пустых или двух заполненых полях"""
         url_image = self.cleaned_data.get('url_image')

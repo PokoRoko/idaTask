@@ -6,16 +6,16 @@
 </head>
 <body>
 {% block content %}
-    <h1>Список изображений</h1>
+<h1>Список изображений</h1>
     {% if images %}
         {% for element in images%}
-                <h5>{{element.id}} {{element.load_image.name}}</h5>
+<a href=/load_image/{{element.load_image.name}}>{{element.load_image.name}}</a>
+<h5>{{element.id}} {{element.load_image.name}}</h5>
         {% endfor %}
     {% else %}
         <p>Нет доступных изображений</p>
     {% endif %}
 <a href="/load_image">Добавить изображение</a>
-
 {% endblock %}
 </body>
 </html>
