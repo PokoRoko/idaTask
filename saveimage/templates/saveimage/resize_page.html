@@ -6,12 +6,12 @@
 </head>
 <body>
 <a href="/">Назад к списку</a>
-<h1>Новое изображение</h1>
+<h1>{{file_name}}</h1>
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
       {{ errors }}
-      {{ form_load.as_p }}
+      {{ form_resize.as_p }}
       <button type="submit" >Отправить</button>
       <p><img src="{{MEDIA_URL}}{{img_url}}" /></p>
   </form>
