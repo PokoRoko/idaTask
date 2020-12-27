@@ -61,7 +61,6 @@ def resize(request, open_image=''):
             if open_image == '':  # Если нет значения из url
                 # Возвращает последнюю загруженную картинку для редактирования
                 max_id = Image.objects.aggregate(Max('id'))['id__max']  # Определяет последнюю запись в модели
-                print(f'Загружено {max_id} фотографий')
                 img_url = Image.objects.get(id=max_id)
                 img_path = img_url.load_image.path
 
@@ -102,11 +101,11 @@ def resize(request, open_image=''):
 
             # Если нет значения из url открывает изображение для редактирования
             else:
-                img_path = MEDIA_ROOT + open_image
-            cache_resize_image = ImgPil.open(img_path)
-
-            # Куда и в каком формате сохраняем временное изображение
-            cache_image_path = f'{MEDIA_URL}cache_image.{cache_resize_image.format}'
+                cache_image_path = MEDIA_URL + open_image
+            # cache_resize_image = ImgPil.open(img_path)
+            #
+            # # Куда и в каком формате сохраняем временное изображение
+            # cache_image_path = f'{MEDIA_URL}cache_image.{cache_resize_image.format}'
             return render(request, 'saveimage/resize_page.html', {
                 'form_resize': ResizeImageForm,
                 'img_url': cache_image_path,
