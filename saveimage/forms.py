@@ -17,6 +17,14 @@ class LoadImageForm(forms.ModelForm):
 
 
 class ResizeImageForm(forms.ModelForm):
+    def clean(self):
+        """Переопределяем clean для вывода ошибке при пустых или двух заполненых полях"""
+        width = self.cleaned_data.get('width')
+        length = self.cleaned_data.get('length')
+        if width == 0 and length == 0:
+            raise forms.ValidationError('Установите минимум одно значение!')
+        return self.cleaned_data
+
     class Meta:
         model = Image
         fields = ('width', 'length',)
